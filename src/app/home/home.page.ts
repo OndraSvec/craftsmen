@@ -123,6 +123,11 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
+  async logout() {
+    await this.authService.logout();
+    this.router.navigateByUrl('/', { replaceUrl: true });
+  }
+
   ngOnDestroy(): void {
     this.craftsmenSub.unsubscribe();
   }
