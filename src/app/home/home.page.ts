@@ -89,6 +89,19 @@ export class HomePage implements OnInit, OnDestroy {
     );
   }
 
+  onSearch() {
+    this.filteredCraftsmen = this.craftsmen.filter(
+      (craftsman) =>
+        craftsman.CRN.toString().includes(this.searchValue) ||
+        craftsman.firstName
+          .toLowerCase()
+          .includes(this.searchValue.toLowerCase()) ||
+        craftsman.lastName
+          .toLowerCase()
+          .includes(this.searchValue.toLowerCase())
+    );
+  }
+
   ngOnDestroy(): void {
     this.craftsmenSub.unsubscribe();
   }
