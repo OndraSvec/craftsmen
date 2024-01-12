@@ -5,6 +5,7 @@ import {
   Firestore,
   QueryConstraint,
   addDoc,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -14,6 +15,7 @@ import {
   orderBy,
   query,
   setDoc,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
@@ -25,6 +27,7 @@ import {
   UserInfo,
 } from './credentials.type';
 import { capitalize, capitalizeCity } from 'src/app/utils/utils';
+import { nanoid } from 'nanoid';
 
 @Injectable({
   providedIn: 'root',
@@ -209,5 +212,40 @@ export class FirestoreService {
       };
     }
     return null;
+  }
+
+  async addReview(
+    message: string,
+    rating: number,
+    CRN: number,
+    craftsmanID: string
+  ) {
+    let reviewer;
+    const user = this.auth.currentUser;
+    if (user) {
+      reviewer = await this.getUser(user.uid);
+    }
+    try {
+      const craftsmanDocRef = doc(
+        this.firestore,
+        `reviews/${CRN}/craftsmen/${craftsmanID}`
+      );
+      if (reviewer) {
+        await updateDoc(craftsmanDocRef, {
+          reviews: arrayUnion({
+            id: nanoid(),
+            reviewer,
+            message,
+            rating,
+          }),
+        });
+        this.craftsmenChanged.next(this.getCraftsmen());
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 }
