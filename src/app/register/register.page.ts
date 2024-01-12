@@ -90,6 +90,15 @@ export class RegisterPage implements OnInit, OnDestroy {
     }
   }
 
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
   ngOnDestroy(): void {
     this.formSub.unsubscribe();
   }
