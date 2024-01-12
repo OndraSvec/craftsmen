@@ -45,6 +45,7 @@ export class FirestoreService {
       const { firstName, lastName, email, type } = obj;
 
       const userDocRef = doc(this.firestore, `users/${user.uid}`);
+
       await setDoc(
         userDocRef,
         obj.profession && obj.city && obj.company && obj.CRN
@@ -69,6 +70,8 @@ export class FirestoreService {
 
       return userDocRef;
     } catch (error) {
+      console.log(error);
+
       return false;
     }
   }
@@ -97,37 +100,53 @@ export class FirestoreService {
       const reviewsToCopy: Review[] = [];
       let q = query(usersRef, ...queryConstraints);
       const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        const unregisteredCraftsmanData = querySnapshot.docs[0];
-        const unregCraftID = unregisteredCraftsmanData.id;
-        const unregCraftRef = doc(this.firestore, `users/${unregCraftID}`);
-        await deleteDoc(unregCraftRef);
 
-        const unregCraftRevRef = doc(
-          this.firestore,
-          `reviews/${obj.CRN}/craftsmen/${unregCraftID}`
+      if (!querySnapshot.empty) {
+        const unregistered = querySnapshot.docs.filter(
+          (document) => !document.data()['email']
         );
-        const unregCraftRevData = await getDoc(unregCraftRevRef);
-        if (unregCraftRevData.exists()) {
-          reviewsToCopy.push(...unregCraftRevData.data()['reviews']);
-          await deleteDoc(unregCraftRevRef);
-        }
+
+        unregistered.forEach(async (document) => {
+          const unregisteredUserID = document.id;
+          const unregisteredUserRef = doc(
+            this.firestore,
+            `users/${unregisteredUserID}`
+          );
+          await deleteDoc(unregisteredUserRef);
+
+          const unregisteredUserReviewRef = doc(
+            this.firestore,
+            `reviews/${obj.CRN}/craftsmen/${unregisteredUserID}`
+          );
+          const unregisteredUserReviewData = await getDoc(
+            unregisteredUserReviewRef
+          );
+
+          if (unregisteredUserReviewData.exists()) {
+            reviewsToCopy.push(...unregisteredUserReviewData.data()['reviews']);
+            await deleteDoc(unregisteredUserReviewRef);
+          }
+        });
+
+        const userDocRef = doc(
+          this.firestore,
+          `reviews/${obj.CRN}/craftsmen/${user.uid}`
+        );
+        await setDoc(userDocRef, {
+          reviews: [],
+        });
+        reviewsToCopy.forEach(async (review) => {
+          console.log(review);
+          await updateDoc(userDocRef, {
+            reviews: arrayUnion(review),
+          });
+        });
+        return true;
       }
 
-      const userDocRef = doc(
-        this.firestore,
-        `reviews/${obj.CRN}/craftsmen/${user.uid}`
-      );
-      await setDoc(
-        userDocRef,
-        {
-          reviews: [...reviewsToCopy],
-        },
-        { merge: true }
-      );
-
-      return true;
+      return false;
     } catch (error) {
+      console.log(error);
       return false;
     }
   }
