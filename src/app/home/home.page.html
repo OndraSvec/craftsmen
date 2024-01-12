@@ -1,20 +1,118 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+    <ion-title>Craftsmen</ion-title>
   </ion-toolbar>
+  <ion-searchbar
+    [debounce]="500"
+    (ionInput)="onSearch()"
+    [(ngModel)]="searchValue"
+    placeholder="Search by name or CRN"
+  ></ion-searchbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content>
+  <ion-button
+    class="ion-padding"
+    color="dark"
+    expand="full"
+    [routerLink]="['/add-review', 'new']"
+    >Add Review</ion-button
+  >
+  @defer (when !loading) { @if (filteredCraftsmen.length) {
+  <div
+    class="ion-padding-end"
+    style="display: grid; grid-template-columns: 1fr auto"
+  >
+    <div></div>
+    <div style="display: flex; gap: 0.15rem">
+      <button (click)="onSortByChange()">
+        <ion-note>{{ sortBy }}</ion-note>
+      </button>
+      <button (click)="onOrderByChange()">
+        <ion-icon
+          color="medium"
+          [name]="orderByAsc ? 'arrow-up-outline' : 'arrow-down-outline'"
+        ></ion-icon>
+      </button>
+    </div>
   </div>
+  }
+  <ion-accordion-group [multiple]="true">
+    @for (craftsman of filteredCraftsmen; track craftsman.id) {
+    <ion-accordion
+      toggleIconSlot="start"
+      [disabled]="!craftsman.reviews.length"
+    >
+      <ion-item slot="header">
+        <ion-label>
+          <h3>{{craftsman.firstName + ' ' + craftsman.lastName }}</h3>
+          <p>{{ 'CRN ' + craftsman.CRN }}</p>
+        </ion-label>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+          "
+        >
+          <ion-badge slot="end" color="dark"
+            >{{ craftsman.reviews | average:'rating' }}</ion-badge
+          >
+          <ion-note slot="end"
+            >{{ craftsman.reviews.length ? '(' + craftsman.reviews.length + ')'
+            : ''}}</ion-note
+          >
+        </div>
+      </ion-item>
+      <ion-list slot="content">
+        @for (review of craftsman.reviews; track review.id) {
+        <div
+          class="ion-padding ion-margin-bottom review"
+          (click)="onNavigate(review.id, craftsman.CRN, craftsman.id)"
+        >
+          <h5>
+            {{ review.reviewer.firstName + ' ' + review.reviewer.lastName }}
+          </h5>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <p>{{ review.message }}</p>
+            <ion-badge slot="end" color="dark"
+              >{{ review.rating | toFixedOne }}</ion-badge
+            >
+          </div>
+        </div>
+        }
+      </ion-list>
+    </ion-accordion>
+    } @empty { @if (!loading) {
+    <ion-item lines="none">
+      <ion-label class="ion-text-center">No Craftsmen Found</ion-label>
+    </ion-item>
+    } }
+  </ion-accordion-group>
+
+  } @placeholder (minimum 1s) {
+  <ion-list class="ion-padding-top">
+    @for (item of craftsmen; track $index) {
+    <ion-item lines="none" class="ion-padding-bottom">
+      <ion-avatar slot="start">
+        <ion-skeleton-text></ion-skeleton-text>
+      </ion-avatar>
+      <ion-skeleton-text animated style="height: 40px" />
+    </ion-item>
+    }
+  </ion-list>
+  }
 </ion-content>
