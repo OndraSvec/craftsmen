@@ -3,6 +3,7 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from '@angular/fire/auth';
 import { Credentials } from '../firestore/credentials.type';
 import { FirestoreService } from '../firestore/firestore.service';
@@ -54,5 +55,9 @@ export class AuthService {
 
   login(obj: Credentials) {
     return this.validateUser('login', obj);
+  }
+
+  logout() {
+    return signOut(this.auth);
   }
 }
