@@ -304,4 +304,27 @@ export class FirestoreService {
       return false;
     }
   }
+
+  async deleteReview(CRN: number, craftsmanID: string, reviewID: string) {
+    try {
+      const craftsmanDocRef = doc(
+        this.firestore,
+        `reviews/${CRN}/craftsmen/${craftsmanID}`
+      );
+      const craftsmanDocSnap = await getDoc(craftsmanDocRef);
+      if (craftsmanDocSnap.exists()) {
+        const reviews = craftsmanDocSnap
+          .data()
+          ['reviews'].filter((review: Review) => review.id !== reviewID);
+        await updateDoc(craftsmanDocRef, {
+          reviews,
+        });
+      }
+      this.craftsmenChanged.next(this.getCraftsmen());
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
