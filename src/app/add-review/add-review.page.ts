@@ -29,6 +29,7 @@ import { FirestoreService } from '../services/firestore/firestore.service';
 import { NavigationState } from './NavigationState.type';
 import { Craftsman } from '../services/firestore/credentials.type';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { UniqueCRNsPipe } from '../pipes/uniqueCRNs/unique-crns.pipe';
 
 @Component({
   selector: 'app-add-review',
@@ -52,6 +53,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
     LoadingSpinnerComponent,
     ReactiveFormsModule,
     RouterLink,
+    UniqueCRNsPipe,
   ],
 })
 export class AddReviewPage implements OnInit, OnDestroy {
@@ -134,15 +136,15 @@ export class AddReviewPage implements OnInit, OnDestroy {
 
   private formInit() {
     this.addReviewForm = new FormGroup({
-      existing: new FormControl(true, [Validators.required]),
-      selectCRN: new FormControl('', [Validators.required]),
-      selectCraftsman: new FormControl('', [Validators.required]),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      profession: new FormControl(''),
-      company: new FormControl(''),
-      CRN: new FormControl(''),
-      city: new FormControl(''),
+      existing: new FormControl(false, [Validators.required]),
+      selectCRN: new FormControl(''),
+      selectCraftsman: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      profession: new FormControl('', [Validators.required]),
+      company: new FormControl('', [Validators.required]),
+      CRN: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
       rating: new FormControl('', [
         Validators.required,
         Validators.pattern('^[1-5]$'),
@@ -191,6 +193,7 @@ export class AddReviewPage implements OnInit, OnDestroy {
       this.loading = true;
 
       this.addReviewForm.patchValue({
+        existing: true,
         selectCRN: this.navigationState.CRN,
         selectCraftsman: this.navigationState.craftsmanID,
         rating: this.navigationState.rating,
@@ -199,9 +202,6 @@ export class AddReviewPage implements OnInit, OnDestroy {
 
       this.selectedCRN?.disable();
       this.selectedCraftsman?.disable();
-    } else {
-      if (this.existing && !this.craftsmen.length)
-        this.addReviewForm.patchValue({ existing: false });
     }
 
     setTimeout(() => (this.loading = false), 700);
@@ -256,6 +256,7 @@ export class AddReviewPage implements OnInit, OnDestroy {
     }
     this.loading = false;
     if (success) {
+      this.addReviewForm.reset();
       this.router.navigateByUrl('/home');
     } else {
       this.showAlert(`Oops..something went wrong!`, 'Please try again.');

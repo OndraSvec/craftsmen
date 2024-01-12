@@ -28,10 +28,8 @@
       formControlName="selectCRN"
       (ionChange)="onCRNChange()"
     >
-      @for (craftsman of craftsmen; track craftsman['id']) {
-      <ion-select-option [value]="craftsman['CRN']"
-        >{{ craftsman['CRN'] }}</ion-select-option
-      >
+      @for (CRN of craftsmen | uniqueCRNs; track $index) {
+      <ion-select-option [value]="CRN">{{ CRN }}</ion-select-option>
       }
     </ion-select>
 
