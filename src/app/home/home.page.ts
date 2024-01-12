@@ -75,6 +75,20 @@ export class HomePage implements OnInit, OnDestroy {
     );
   }
 
+  onOrderByChange() {
+    this.orderByAsc ? (this.orderByAsc = false) : (this.orderByAsc = true);
+    this.craftsmen = sortCraftsmen(
+      this.craftsmen,
+      this.sortBy,
+      this.orderByAsc ? 'asc' : 'desc'
+    );
+    this.filteredCraftsmen = sortCraftsmen(
+      this.filteredCraftsmen,
+      this.sortBy,
+      this.orderByAsc ? 'asc' : 'desc'
+    );
+  }
+
   ngOnDestroy(): void {
     this.craftsmenSub.unsubscribe();
   }
