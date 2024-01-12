@@ -174,4 +174,53 @@ export class AddReviewPage implements OnInit {
       (craftsman) => craftsman['CRN'] === this.selectedCRN?.value
     );
   }
+
+  async onSubmit() {
+    this.loading = true;
+
+    let success = false;
+
+    if (this.editMode) {
+      success = await this.firestoreService.updateReview(
+        +this.selectedCRN?.value,
+        this.selectedCraftsman?.value,
+        this.navigationState.reviewID,
+        this.message?.value,
+        +this.rating?.value
+      );
+    } else {
+      if (this.existing?.value) {
+        success = await this.firestoreService.addReview(
+          this.message?.value,
+          +this.rating?.value,
+          +this.selectedCRN?.value,
+          this.selectedCraftsman?.value
+        );
+      } else {
+        const craftsmanID =
+          await this.firestoreService.addUnregisteredCraftsman({
+            firstName: this.firstName?.value,
+            lastName: this.lastName?.value,
+            profession: this.profession?.value,
+            company: this.company?.value,
+            CRN: +this.CRN?.value,
+            city: this.city?.value,
+          });
+        if (craftsmanID) {
+          success = await this.firestoreService.addReview(
+            this.message?.value,
+            +this.rating?.value,
+            +this.CRN?.value,
+            craftsmanID
+          );
+        }
+      }
+    }
+    this.loading = false;
+    if (success) {
+      this.router.navigateByUrl('/home');
+    } else {
+      this.showAlert(`Oops..something went wrong!`, 'Please try again.');
+    }
+  }
 }
