@@ -9,3 +9,12 @@ export type Credentials = {
   profession?: string;
   type: string;
 };
+
+export type UnregisteredCredentials = {
+  city: string;
+  company: string;
+  CRN: number;
+  firstName: string;
+  lastName: string;
+  profession: string;
+};
