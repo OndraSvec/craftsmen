@@ -22,6 +22,7 @@ import {
   Credentials,
   Review,
   UnregisteredCredentials,
+  UserInfo,
 } from './credentials.type';
 import { capitalize, capitalizeCity } from 'src/app/utils/utils';
 
@@ -195,5 +196,18 @@ export class FirestoreService {
       console.log(error);
       return [];
     }
+  }
+
+  async getUser(uid: string): Promise<UserInfo | null> {
+    const userDocRef = doc(this.firestore, `users/${uid}`);
+    const userDocSnap = await getDoc(userDocRef);
+    if (userDocSnap.exists()) {
+      return {
+        uid,
+        firstName: userDocSnap.data()['firstName'],
+        lastName: userDocSnap.data()['lastName'],
+      };
+    }
+    return null;
   }
 }
