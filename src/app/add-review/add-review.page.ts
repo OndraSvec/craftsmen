@@ -7,18 +7,52 @@ import {
   Validators,
 } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import {
+  IonButtons,
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonTitle,
+  IonToggle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { chevronBackOutline } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { FirestoreService } from '../services/firestore/firestore.service';
 import { NavigationState } from './NavigationState.type';
 import { Craftsman } from '../services/firestore/credentials.type';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-add-review',
   templateUrl: './add-review.page.html',
   styleUrls: ['./add-review.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    IonButtons,
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonSelect,
+    IonSelectOption,
+    IonTextarea,
+    IonTitle,
+    IonToggle,
+    IonToolbar,
+    LoadingSpinnerComponent,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
 })
 export class AddReviewPage implements OnInit, OnDestroy {
   addReviewForm!: FormGroup;
@@ -34,6 +68,7 @@ export class AddReviewPage implements OnInit, OnDestroy {
   public editMode = false;
 
   constructor() {
+    addIcons({ chevronBackOutline });
     this.navigationState = this.router.getCurrentNavigation()?.extras
       .state as NavigationState;
   }

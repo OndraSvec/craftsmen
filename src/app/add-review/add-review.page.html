@@ -1,13 +1,161 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>addReview</ion-title>
+<ion-header>
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/home']">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ editMode ? 'Edit Review' : 'Add Review'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">addReview</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="addReviewForm" (ngSubmit)="onSubmit()">
+    @if (!editMode) {
+    <ion-toggle
+      class="ion-margin-bottom"
+      color="dark"
+      [checked]="true"
+      labelPlacement="start"
+      formControlName="existing"
+      >Existing</ion-toggle
+    >
+    } @if(existing?.value) {<ion-select
+      class="ion-margin-bottom"
+      fill="solid"
+      label="CRN"
+      labelPlacement="floating"
+      formControlName="selectCRN"
+      (ionChange)="onCRNChange()"
+    >
+      @for (craftsman of craftsmen; track craftsman['id']) {
+      <ion-select-option [value]="craftsman['CRN']"
+        >{{ craftsman['CRN'] }}</ion-select-option
+      >
+      }
+    </ion-select>
+
+    <ion-select
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Craftsman"
+      labelPlacement="floating"
+      formControlName="selectCraftsman"
+    >
+      @for (craftsman of filteredCraftsmen; track craftsman['id']) {
+      <ion-select-option [value]="craftsman['id']"
+        >{{ craftsman['firstName'] + ' ' + craftsman['lastName']
+        }}</ion-select-option
+      >
+      }
+    </ion-select>
+    } @else {
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="First Name"
+      labelPlacement="floating"
+      type="text"
+      formControlName="firstName"
+      helperText="Enter Craftsman's First Name"
+      errorText="This field is required"
+    ></ion-input>
+
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Last Name"
+      labelPlacement="floating"
+      type="text"
+      formControlName="lastName"
+      helperText="Enter Craftsman's Last Name"
+      errorText="This field is required"
+    ></ion-input>
+
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Profession"
+      labelPlacement="floating"
+      type="text"
+      formControlName="profession"
+      helperText="Enter Craftsman's Profession"
+      errorText="This field is required"
+    >
+    </ion-input>
+
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Company"
+      labelPlacement="floating"
+      type="text"
+      formControlName="company"
+      helperText="Enter Craftsman's Company"
+      errorText="This field is required"
+    >
+    </ion-input>
+
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="CRN"
+      labelPlacement="floating"
+      type="number"
+      formControlName="CRN"
+      helperText="Enter Craftsman's Company Registration Number"
+      errorText="Enter a valid CRN"
+    >
+    </ion-input>
+
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="City"
+      labelPlacement="floating"
+      type="text"
+      formControlName="city"
+      helperText="Enter Craftsman's City"
+      errorText="This field is required"
+    >
+    </ion-input>
+    }
+
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Rating"
+      labelPlacement="floating"
+      type="number"
+      formControlName="rating"
+      helperText="Enter your Rating"
+      errorText="Enter a value between 1 and 5"
+    ></ion-input>
+
+    <ion-textarea
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Review"
+      labelPlacement="floating"
+      formControlName="message"
+      helperText="Enter your Review"
+      errorText="This field is required"
+    ></ion-textarea>
+
+    <ion-button
+      color="dark"
+      expand="full"
+      type="submit"
+      [disabled]="!addReviewForm.valid"
+      >{{ editMode ? 'Edit Review' : 'Add Review'}}</ion-button
+    >
+    @if (editMode) {
+    <ion-button color="dark" expand="full" type="button" (click)="onDelete()"
+      >Delete Review</ion-button
+    >
+    }
+  </form>
 </ion-content>
+@if (loading) {
+<app-loading-spinner></app-loading-spinner>
+}
