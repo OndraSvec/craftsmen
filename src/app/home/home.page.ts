@@ -33,6 +33,8 @@ import { Craftsman } from '../services/firestore/credentials.type';
 import { sortCraftsmen } from '../utils/utils';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { FormsModule } from '@angular/forms';
+import { AveragePipe } from '../pipes/average/average.pipe';
+import { ToFixedOnePipe } from '../pipes/toFixedOne/to-fixed-one.pipe';
 
 @Component({
   selector: 'app-home',
@@ -40,6 +42,8 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
+    AveragePipe,
+    ToFixedOnePipe,
     FormsModule,
     IonAccordion,
     IonAccordionGroup,
