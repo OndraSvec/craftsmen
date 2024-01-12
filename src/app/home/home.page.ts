@@ -1,23 +1,66 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
+  IonAccordion,
+  IonAccordionGroup,
+  IonAvatar,
+  IonBadge,
+  IonButton,
+  IonButtons,
   IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonNote,
+  IonSearchbar,
+  IonSkeletonText,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import {
+  logOutOutline,
+  personCircleOutline,
+  arrowUpOutline,
+  arrowDownOutline,
+} from 'ionicons/icons';
 import { AuthService } from '../services/auth/auth.service';
 import { FirestoreService } from '../services/firestore/firestore.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Craftsman } from '../services/firestore/credentials.type';
 import { sortCraftsmen } from '../utils/utils';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [
+    FormsModule,
+    IonAccordion,
+    IonAccordionGroup,
+    IonAvatar,
+    IonBadge,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonNote,
+    IonSearchbar,
+    IonSkeletonText,
+    IonTitle,
+    IonToolbar,
+    LoadingSpinnerComponent,
+    RouterLink,
+  ],
 })
 export class HomePage implements OnInit, OnDestroy {
   private authService: AuthService = inject(AuthService);
@@ -31,7 +74,14 @@ export class HomePage implements OnInit, OnDestroy {
   public searchValue = '';
   public loading = false;
 
-  constructor() {}
+  constructor() {
+    addIcons({
+      logOutOutline,
+      personCircleOutline,
+      arrowUpOutline,
+      arrowDownOutline,
+    });
+  }
 
   ngOnInit(): void {
     this.loadCraftsmen();
