@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -20,7 +20,7 @@ import { Craftsman } from '../services/firestore/credentials.type';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
 })
-export class AddReviewPage implements OnInit {
+export class AddReviewPage implements OnInit, OnDestroy {
   addReviewForm!: FormGroup;
   private formSub!: Subscription;
   private router: Router = inject(Router);
@@ -80,6 +80,21 @@ export class AddReviewPage implements OnInit {
 
   get message() {
     return this.addReviewForm.get('message');
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      const paramID = params['id'];
+      this.editMode = paramID === 'new' ? false : true;
+      if (paramID !== 'new' && paramID !== 'edit')
+        this.router.navigateByUrl('/home');
+    });
+
+    this.firestoreService.getCraftsmen().then((data) => {
+      this.craftsmen = data;
+      this.filteredCraftsmen = this.craftsmen;
+    });
+    this.formInit();
   }
 
   private formInit() {
@@ -152,21 +167,6 @@ export class AddReviewPage implements OnInit {
     }
 
     setTimeout(() => (this.loading = false), 700);
-  }
-
-  ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      const paramID = params['id'];
-      this.editMode = paramID === 'new' ? false : true;
-      if (paramID !== 'new' && paramID !== 'edit')
-        this.router.navigateByUrl('/home');
-    });
-
-    this.firestoreService.getCraftsmen().then((data) => {
-      this.craftsmen = data;
-      this.filteredCraftsmen = this.craftsmen;
-    });
-    this.formInit();
   }
 
   onCRNChange() {
@@ -250,5 +250,9 @@ export class AddReviewPage implements OnInit {
       buttons: ['OK'],
     });
     await alert.present();
+  }
+
+  ngOnDestroy(): void {
+    this.formSub.unsubscribe();
   }
 }
