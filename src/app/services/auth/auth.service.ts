@@ -51,4 +51,8 @@ export class AuthService {
   register(obj: Credentials) {
     return this.validateUser('registration', obj);
   }
+
+  login(obj: Credentials) {
+    return this.validateUser('login', obj);
+  }
 }
