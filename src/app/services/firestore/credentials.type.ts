@@ -18,3 +18,9 @@ export type UnregisteredCredentials = {
   lastName: string;
   profession: string;
 };
+
+export type UserInfo = {
+  uid: string;
+  firstName: string;
+  lastName: string;
+};
