@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "craftsmen-prod": {
+      "hosting": {
+        "app": [
+          "craftsmen-prod"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "craftsmen-prod"
+  }
+}
