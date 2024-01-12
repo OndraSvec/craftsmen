@@ -1,25 +1,38 @@
 import { Routes } from '@angular/router';
+import {
+  canActivate,
+  redirectLoggedInTo,
+  redirectUnauthorizedTo,
+} from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  },
-  {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    loadComponent: () => import('./login/login.page').then((m) => m.LoginPage),
+    ...canActivate(redirectLoggedInToHome),
   },
   {
     path: 'register',
-    loadComponent: () => import('./register/register.page').then( m => m.RegisterPage)
+    loadComponent: () =>
+      import('./register/register.page').then((m) => m.RegisterPage),
   },
   {
-    path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    ...canActivate(redirectUnauthorizedToLogin),
   },
   {
-    path: 'add-review',
-    loadComponent: () => import('./add-review/add-review.page').then( m => m.AddReviewPage)
+    path: 'add-review/:id',
+    loadComponent: () =>
+      import('./add-review/add-review.page').then((m) => m.AddReviewPage),
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
   },
 ];
