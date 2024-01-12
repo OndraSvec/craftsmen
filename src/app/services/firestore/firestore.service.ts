@@ -248,4 +248,23 @@ export class FirestoreService {
       return false;
     }
   }
+
+  async getReview(CRN: number, craftsmanID: string, reviewID: string) {
+    try {
+      const craftsmanDocRef = doc(
+        this.firestore,
+        `reviews/${CRN}/craftsmen/${craftsmanID}`
+      );
+      const craftsmanDocSnap = await getDoc(craftsmanDocRef);
+      if (craftsmanDocSnap.exists()) {
+        return craftsmanDocSnap
+          .data()
+          ['reviews'].find((review: Review) => reviewID === review.id);
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
