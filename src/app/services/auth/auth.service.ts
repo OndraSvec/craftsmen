@@ -1,9 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private auth: Auth = inject(Auth);
 
-  constructor() { }
+  constructor() {}
+
+  getUser() {
+    return this.auth.currentUser?.uid;
+  }
 }
