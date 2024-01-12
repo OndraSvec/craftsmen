@@ -24,3 +24,8 @@ export type UserInfo = {
   firstName: string;
   lastName: string;
 };
+
+type Reviewer = {
+  firstName: string;
+  lastName: string;
+};
