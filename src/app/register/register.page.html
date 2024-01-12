@@ -1,13 +1,124 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
+<ion-header>
+  <ion-toolbar color="dark" mode="ios">
+    <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="credentials" (ngSubmit)="register()">
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="First Name"
+      labelPlacement="floating"
+      type="text"
+      formControlName="firstName"
+      helperText="Enter your First Name"
+      errorText="This field is required"
+    ></ion-input>
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Last Name"
+      labelPlacement="floating"
+      type="text"
+      formControlName="lastName"
+      helperText="Enter your Last Name"
+      errorText="This field is required"
+    ></ion-input>
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Email"
+      labelPlacement="floating"
+      type="email"
+      formControlName="email"
+      helperText="Enter your Email Address"
+      errorText="Invalid Email"
+    ></ion-input>
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Password"
+      labelPlacement="floating"
+      type="password"
+      formControlName="password"
+      helperText="Enter your Password"
+      errorText="Invalid Password: Must be at least 8 characters long"
+    ></ion-input>
+
+    <ion-select
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Type"
+      labelPlacement="floating"
+      formControlName="type"
+    >
+      @for (type of userTypes; track $index) {
+      <ion-select-option [value]="type">{{type}}</ion-select-option>
+      }
+    </ion-select>
+
+    @if(type?.value === 'Craftsman') {
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Profession"
+      labelPlacement="floating"
+      type="text"
+      formControlName="profession"
+      helperText="Enter your Profession"
+      errorText="This field is required"
+    >
+    </ion-input>
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="Company"
+      labelPlacement="floating"
+      type="text"
+      formControlName="company"
+      helperText="Enter your Company"
+      errorText="This field is required"
+    >
+    </ion-input>
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="CRN"
+      labelPlacement="floating"
+      type="number"
+      formControlName="CRN"
+      helperText="Enter your Company Registration Number"
+      errorText="Enter a valid CRN"
+    >
+    </ion-input>
+    <ion-input
+      class="ion-margin-bottom"
+      fill="solid"
+      label="City"
+      labelPlacement="floating"
+      type="text"
+      formControlName="city"
+      helperText="Enter your City"
+      errorText="This field is required"
+    >
+    </ion-input>
+    }
+
+    <ion-button
+      expand="full"
+      type="submit"
+      color="dark"
+      [disabled]="!credentials.valid"
+      >Register</ion-button
+    >
+  </form>
+  <p>
+    Already have an account?
+    <a [routerLink]="['/']" [style.text-decoration]="'none'"> Login!</a>
+  </p>
 </ion-content>
+@if (loading) {
+<app-loading-spinner></app-loading-spinner>
+}

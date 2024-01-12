@@ -3,21 +3,44 @@ import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToolbar,
+    LoadingSpinnerComponent,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
 })
 export class RegisterPage implements OnInit, OnDestroy {
   credentials!: FormGroup;
