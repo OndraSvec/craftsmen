@@ -199,6 +199,9 @@ export class AddReviewPage implements OnInit, OnDestroy {
 
       this.selectedCRN?.disable();
       this.selectedCraftsman?.disable();
+    } else {
+      if (this.existing && !this.craftsmen.length)
+        this.addReviewForm.patchValue({ existing: false });
     }
 
     setTimeout(() => (this.loading = false), 700);

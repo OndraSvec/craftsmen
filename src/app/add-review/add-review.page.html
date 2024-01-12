@@ -11,7 +11,7 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="addReviewForm" (ngSubmit)="onSubmit()">
-    @if (!editMode) {
+    @if (!editMode && craftsmen.length > 0) {
     <ion-toggle
       class="ion-margin-bottom"
       color="dark"
