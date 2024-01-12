@@ -7,15 +7,35 @@ import {
   Validators,
 } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonTitle,
+    IonToolbar,
+    LoadingSpinnerComponent,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
 })
 export class LoginPage implements OnInit {
   credentials!: FormGroup;
