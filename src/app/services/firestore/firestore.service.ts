@@ -1,14 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import {
+  DocumentData,
   Firestore,
   QueryConstraint,
   addDoc,
   collection,
   deleteDoc,
   doc,
+  documentId,
   getDoc,
   getDocs,
+  orderBy,
   query,
   setDoc,
   where,
@@ -153,6 +156,44 @@ export class FirestoreService {
     } catch (error) {
       console.log(error);
       return null;
+    }
+  }
+
+  async getCraftsmen() {
+    try {
+      const queryResult: DocumentData[] = [];
+
+      const usersRef = collection(this.firestore, 'users');
+      const q = query(
+        usersRef,
+        where('type', '==', 'Craftsman'),
+        orderBy('lastName')
+      );
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => {
+        const dataID = doc.id;
+        const data: DocumentData = doc.data();
+        let dataWithReviews: DocumentData = {};
+
+        const craftsmenRef = collection(
+          this.firestore,
+          `reviews/${data['CRN']}/craftsmen`
+        );
+        const craftsmanQ = query(
+          craftsmenRef,
+          where(documentId(), '==', `${dataID}`)
+        );
+        const craftsmanQS = await getDocs(craftsmanQ);
+        craftsmanQS.forEach((doc) => {
+          dataWithReviews = { ...data, ...doc.data(), id: doc.id };
+        });
+        queryResult.push(dataWithReviews);
+      });
+      return queryResult as Craftsman[];
+    } catch (error) {
+      console.log(error);
+      return [];
     }
   }
 }
