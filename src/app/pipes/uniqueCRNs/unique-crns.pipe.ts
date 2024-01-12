@@ -12,6 +12,6 @@ export class UniqueCRNsPipe implements PipeTransform {
       (craftsman) =>
         !result.includes(craftsman.CRN) && result.push(craftsman.CRN)
     );
-    return result;
+    return result.sort((a, b) => a - b);
   }
 }
