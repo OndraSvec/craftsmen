@@ -25,6 +25,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   private router: Router = inject(Router);
   private authService: AuthService = inject(AuthService);
   private alertController: AlertController = inject(AlertController);
+  public loading = false;
 
   userTypes = ['Reviewer', 'Craftsman'];
 
@@ -87,6 +88,18 @@ export class RegisterPage implements OnInit, OnDestroy {
         this.city?.updateValueAndValidity();
         this.CRN?.updateValueAndValidity();
       });
+    }
+  }
+
+  async register() {
+    this.loading = true;
+    const user = await this.authService.register(this.credentials.value);
+    this.loading = false;
+
+    if (user) {
+      this.router.navigateByUrl('/home', { replaceUrl: true });
+    } else {
+      this.showAlert(`Oops..registration failed!`, 'Please try again.');
     }
   }
 
