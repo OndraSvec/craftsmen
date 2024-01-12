@@ -224,6 +224,25 @@ export class AddReviewPage implements OnInit {
     }
   }
 
+  async onDelete() {
+    this.loading = true;
+
+    const { CRN, craftsmanID, reviewID } = this.navigationState;
+    const success = await this.firestoreService.deleteReview(
+      CRN,
+      craftsmanID,
+      reviewID
+    );
+
+    this.loading = false;
+
+    if (success) {
+      this.router.navigateByUrl('/home');
+    } else {
+      this.showAlert(`Oops..something went wrong!`, 'Please try again.');
+    }
+  }
+
   async showAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header,
