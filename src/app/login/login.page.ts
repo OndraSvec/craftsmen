@@ -22,6 +22,7 @@ export class LoginPage implements OnInit {
   private router: Router = inject(Router);
   private authService: AuthService = inject(AuthService);
   private alertController: AlertController = inject(AlertController);
+  public loading = false;
 
   constructor() {}
 
@@ -33,6 +34,18 @@ export class LoginPage implements OnInit {
         Validators.minLength(8),
       ]),
     });
+  }
+
+  async login() {
+    this.loading = true;
+    const user = await this.authService.login(this.credentials.value);
+    this.loading = false;
+
+    if (user) {
+      this.router.navigateByUrl('/home', { replaceUrl: true });
+    } else {
+      this.showAlert(`Oops..login failed!`, 'Please try again.');
+    }
   }
 
   async showAlert(header: string, message: string) {
