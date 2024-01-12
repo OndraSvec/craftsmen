@@ -10,6 +10,7 @@ import { FirestoreService } from '../services/firestore/firestore.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Craftsman } from '../services/firestore/credentials.type';
+import { sortCraftsmen } from '../utils/utils';
 
 @Component({
   selector: 'app-home',
@@ -56,6 +57,22 @@ export class HomePage implements OnInit, OnDestroy {
         this.filteredCraftsmen = data;
       })
       .finally(() => (this.loading = false));
+  }
+
+  onSortByChange() {
+    this.sortBy === 'Last Name'
+      ? (this.sortBy = 'Rating')
+      : (this.sortBy = 'Last Name');
+    this.craftsmen = sortCraftsmen(
+      this.craftsmen,
+      this.sortBy,
+      this.orderByAsc ? 'asc' : 'desc'
+    );
+    this.filteredCraftsmen = sortCraftsmen(
+      this.filteredCraftsmen,
+      this.sortBy,
+      this.orderByAsc ? 'asc' : 'desc'
+    );
   }
 
   ngOnDestroy(): void {
