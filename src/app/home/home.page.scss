@@ -1,27 +1,35 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+ion-header {
+  background-color: #222428;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+ion-badge {
+  min-width: 1.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+.review {
+  background-color: rgba($color: #000000, $alpha: 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
-  color: #8c8c8c;
+.review h5,
+h3 {
+  font-weight: 600;
+}
 
+button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding-block: 0.25rem;
+}
+
+.review h5,
+p {
   margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+  padding: 0;
 }
