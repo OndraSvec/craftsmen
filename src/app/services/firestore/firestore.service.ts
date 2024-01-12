@@ -267,4 +267,41 @@ export class FirestoreService {
       return false;
     }
   }
+
+  async updateReview(
+    CRN: number,
+    craftsmanID: string,
+    reviewID: string,
+    message: string,
+    rating: number
+  ) {
+    try {
+      const craftsmanDocRef = doc(
+        this.firestore,
+        `reviews/${CRN}/craftsmen/${craftsmanID}`
+      );
+      const craftsmanDocSnap = await getDoc(craftsmanDocRef);
+      if (craftsmanDocSnap.exists()) {
+        const reviews = craftsmanDocSnap
+          .data()
+          ['reviews'].map((review: Review) =>
+            review.id === reviewID
+              ? {
+                  ...review,
+                  message,
+                  rating,
+                }
+              : review
+          );
+        await updateDoc(craftsmanDocRef, {
+          reviews,
+        });
+      }
+      this.craftsmenChanged.next(this.getCraftsmen());
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
