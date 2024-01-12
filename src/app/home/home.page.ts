@@ -102,6 +102,27 @@ export class HomePage implements OnInit, OnDestroy {
     );
   }
 
+  async onNavigate(reviewID: string, CRN: number, craftsmanID: string) {
+    const review = await this.firestoreService.getReview(
+      CRN,
+      craftsmanID,
+      reviewID
+    );
+    const currentUser = this.authService.getUser();
+
+    if (review.reviewer.uid !== currentUser) return;
+
+    this.router.navigate(['/add-review', 'edit'], {
+      state: {
+        CRN,
+        craftsmanID,
+        reviewID,
+        message: review.message,
+        rating: review.rating,
+      },
+    });
+  }
+
   ngOnDestroy(): void {
     this.craftsmenSub.unsubscribe();
   }
