@@ -25,6 +25,13 @@ export type UserInfo = {
   lastName: string;
 };
 
+export type Review = {
+  id: string;
+  message: string;
+  rating: number;
+  reviewer: Reviewer;
+};
+
 type Reviewer = {
   firstName: string;
   lastName: string;
