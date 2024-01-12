@@ -1,0 +1,7 @@
+{
+  "name": "craftsmen",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
