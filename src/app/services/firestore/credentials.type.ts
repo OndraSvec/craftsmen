@@ -25,6 +25,19 @@ export type UserInfo = {
   lastName: string;
 };
 
+export type Craftsman = {
+  city: string;
+  company: string;
+  CRN: number;
+  email: string;
+  firstName: string;
+  id: string;
+  lastName: string;
+  profession: string;
+  reviews: Review[];
+  type: string;
+};
+
 export type Review = {
   id: string;
   message: string;
