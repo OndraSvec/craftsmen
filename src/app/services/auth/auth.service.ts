@@ -47,4 +47,8 @@ export class AuthService {
       return null;
     }
   }
+
+  register(obj: Credentials) {
+    return this.validateUser('registration', obj);
+  }
 }
