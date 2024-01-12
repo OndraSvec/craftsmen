@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -18,19 +18,32 @@ import { Craftsman } from '../services/firestore/credentials.type';
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   private authService: AuthService = inject(AuthService);
   private firestoreService: FirestoreService = inject(FirestoreService);
   private router: Router = inject(Router);
   craftsmenSub!: Subscription;
   public craftsmen: Craftsman[] = [];
   public filteredCraftsmen: Craftsman[] = [];
+  public orderByAsc = true;
+  public sortBy = 'Last Name';
+  public searchValue = '';
   public loading = false;
 
   constructor() {}
 
   ngOnInit(): void {
     this.loadCraftsmen();
+    this.craftsmenSub = this.firestoreService.craftsmenChanged.subscribe(
+      (craftsmenData) =>
+        craftsmenData.then((data) => {
+          this.orderByAsc = true;
+          this.sortBy = 'Last Name';
+          this.searchValue = '';
+          this.craftsmen = data;
+          this.filteredCraftsmen = this.craftsmen;
+        })
+    );
   }
 
   loadCraftsmen() {
@@ -43,5 +56,9 @@ export class HomePage implements OnInit {
         this.filteredCraftsmen = data;
       })
       .finally(() => (this.loading = false));
+  }
+
+  ngOnDestroy(): void {
+    this.craftsmenSub.unsubscribe();
   }
 }
