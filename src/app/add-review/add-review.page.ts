@@ -223,4 +223,13 @@ export class AddReviewPage implements OnInit {
       this.showAlert(`Oops..something went wrong!`, 'Please try again.');
     }
   }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
 }
