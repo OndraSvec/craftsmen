@@ -168,4 +168,10 @@ export class AddReviewPage implements OnInit {
     });
     this.formInit();
   }
+
+  onCRNChange() {
+    this.filteredCraftsmen = this.craftsmen.filter(
+      (craftsman) => craftsman['CRN'] === this.selectedCRN?.value
+    );
+  }
 }
