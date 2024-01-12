@@ -3,6 +3,7 @@ import { Auth, User } from '@angular/fire/auth';
 import {
   Firestore,
   QueryConstraint,
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -13,7 +14,12 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
-import { Craftsman, Credentials, Review } from './credentials.type';
+import {
+  Craftsman,
+  Credentials,
+  Review,
+  UnregisteredCredentials,
+} from './credentials.type';
 import { capitalize, capitalizeCity } from 'src/app/utils/utils';
 
 @Injectable({
@@ -116,6 +122,37 @@ export class FirestoreService {
       return true;
     } catch (error) {
       return false;
+    }
+  }
+
+  async addUnregisteredCraftsman(obj: UnregisteredCredentials) {
+    try {
+      const usersRef = collection(this.firestore, 'users');
+      const docRef = await addDoc(usersRef, {
+        firstName: capitalize(obj.firstName),
+        lastName: capitalize(obj.lastName),
+        type: 'Craftsman',
+        profession: capitalize(obj.profession),
+        company: obj.company,
+        city: capitalizeCity(obj.city),
+        CRN: +obj.CRN,
+      });
+
+      const userDocRef = doc(
+        this.firestore,
+        `reviews/${obj.CRN}/craftsmen/${docRef.id}`
+      );
+      await setDoc(
+        userDocRef,
+        {
+          reviews: [],
+        },
+        { merge: true }
+      );
+      return docRef.id;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 }
