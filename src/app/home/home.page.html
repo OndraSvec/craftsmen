@@ -103,16 +103,7 @@
     } }
   </ion-accordion-group>
 
-  } @placeholder (minimum 1s) {
-  <ion-list class="ion-padding-top">
-    @for (item of craftsmen; track $index) {
-    <ion-item lines="none" class="ion-padding-bottom">
-      <ion-avatar slot="start">
-        <ion-skeleton-text></ion-skeleton-text>
-      </ion-avatar>
-      <ion-skeleton-text animated style="height: 40px" />
-    </ion-item>
-    }
-  </ion-list>
+  } @if (loading) {
+  <app-loading-spinner></app-loading-spinner>
   }
 </ion-content>

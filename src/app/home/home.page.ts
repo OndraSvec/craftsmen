@@ -14,7 +14,6 @@ import {
   IonList,
   IonNote,
   IonSearchbar,
-  IonSkeletonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
@@ -59,7 +58,6 @@ import { ToFixedOnePipe } from '../pipes/toFixedOne/to-fixed-one.pipe';
     IonList,
     IonNote,
     IonSearchbar,
-    IonSkeletonText,
     IonTitle,
     IonToolbar,
     LoadingSpinnerComponent,
