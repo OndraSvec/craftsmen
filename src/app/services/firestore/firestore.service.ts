@@ -301,6 +301,13 @@ export class FirestoreService {
       );
       const craftsmanDocSnap = await getDoc(craftsmanDocRef);
       if (craftsmanDocSnap.exists()) {
+        const reviewerID = craftsmanDocSnap
+          .data()
+          ['reviews'].find((review: Review) => review.id === reviewID)
+          .reviewer.uid;
+        if (reviewerID !== this.auth.currentUser?.uid) {
+          return false;
+        }
         const reviews = craftsmanDocSnap
           .data()
           ['reviews'].map((review: Review) =>
@@ -315,9 +322,10 @@ export class FirestoreService {
         await updateDoc(craftsmanDocRef, {
           reviews,
         });
+        this.craftsmenChanged.next(this.getCraftsmen());
+        return true;
       }
-      this.craftsmenChanged.next(this.getCraftsmen());
-      return true;
+      return false;
     } catch (error) {
       console.log(error);
       return false;
@@ -332,15 +340,23 @@ export class FirestoreService {
       );
       const craftsmanDocSnap = await getDoc(craftsmanDocRef);
       if (craftsmanDocSnap.exists()) {
+        const reviewerID = craftsmanDocSnap
+          .data()
+          ['reviews'].find((review: Review) => review.id === reviewID)
+          .reviewer.uid;
+        if (reviewerID !== this.auth.currentUser?.uid) {
+          return false;
+        }
         const reviews = craftsmanDocSnap
           .data()
           ['reviews'].filter((review: Review) => review.id !== reviewID);
         await updateDoc(craftsmanDocRef, {
           reviews,
         });
+        this.craftsmenChanged.next(this.getCraftsmen());
+        return true;
       }
-      this.craftsmenChanged.next(this.getCraftsmen());
-      return true;
+      return false;
     } catch (error) {
       console.log(error);
       return false;

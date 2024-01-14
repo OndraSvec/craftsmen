@@ -257,6 +257,7 @@ export class AddReviewPage implements OnInit, OnDestroy {
     this.loading = false;
     if (success) {
       this.addReviewForm.reset();
+      this.formInit();
       this.router.navigateByUrl('/home');
     } else {
       this.showAlert(`Oops..something went wrong!`, 'Please try again.');
