@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark" mode="ios">
+  <ion-toolbar color="warning" mode="ios">
     <ion-buttons slot="start">
       <ion-button [routerLink]="['/home']">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -14,7 +14,7 @@
     @if (!editMode && craftsmen.length > 0) {
     <ion-toggle
       class="ion-margin-bottom"
-      color="dark"
+      color="warning"
       [checked]="true"
       labelPlacement="start"
       formControlName="existing"
@@ -22,6 +22,8 @@
     >
     } @if(existing?.value) {<ion-select
       class="ion-margin-bottom"
+      color="warning"
+      interface="popover"
       fill="solid"
       label="CRN"
       labelPlacement="floating"
@@ -35,8 +37,11 @@
 
     <ion-select
       class="ion-margin-bottom"
+      color="warning"
+      interface="popover"
       fill="solid"
       label="Craftsman"
+      color="warning"
       labelPlacement="floating"
       formControlName="selectCraftsman"
     >
@@ -50,6 +55,7 @@
     } @else {
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="First Name"
       labelPlacement="floating"
@@ -61,6 +67,7 @@
 
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Last Name"
       labelPlacement="floating"
@@ -72,6 +79,7 @@
 
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Profession"
       labelPlacement="floating"
@@ -84,6 +92,7 @@
 
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Company"
       labelPlacement="floating"
@@ -96,6 +105,7 @@
 
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="CRN"
       labelPlacement="floating"
@@ -108,6 +118,7 @@
 
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="City"
       labelPlacement="floating"
@@ -121,6 +132,7 @@
 
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Rating"
       labelPlacement="floating"
@@ -132,6 +144,7 @@
 
     <ion-textarea
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Review"
       labelPlacement="floating"
@@ -141,14 +154,14 @@
     ></ion-textarea>
 
     <ion-button
-      color="dark"
+      color="warning"
       expand="full"
       type="submit"
       [disabled]="!addReviewForm.valid"
       >{{ editMode ? 'Edit Review' : 'Add Review'}}</ion-button
     >
     @if (editMode) {
-    <ion-button color="dark" expand="full" type="button" (click)="onDelete()"
+    <ion-button color="warning" expand="full" type="button" (click)="onDelete()"
       >Delete Review</ion-button
     >
     }

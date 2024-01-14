@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark" mode="ios">
+  <ion-toolbar color="warning" mode="ios">
     <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,6 +8,7 @@
   <form [formGroup]="credentials" (ngSubmit)="register()">
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="First Name"
       labelPlacement="floating"
@@ -18,6 +19,7 @@
     ></ion-input>
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Last Name"
       labelPlacement="floating"
@@ -28,6 +30,7 @@
     ></ion-input>
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Email"
       labelPlacement="floating"
@@ -38,6 +41,7 @@
     ></ion-input>
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Password"
       labelPlacement="floating"
@@ -49,6 +53,8 @@
 
     <ion-select
       class="ion-margin-bottom"
+      color="warning"
+      interface="popover"
       fill="solid"
       label="Type"
       labelPlacement="floating"
@@ -62,6 +68,7 @@
     @if(type?.value === 'Craftsman') {
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Profession"
       labelPlacement="floating"
@@ -73,6 +80,7 @@
     </ion-input>
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Company"
       labelPlacement="floating"
@@ -84,6 +92,7 @@
     </ion-input>
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="CRN"
       labelPlacement="floating"
@@ -95,6 +104,7 @@
     </ion-input>
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="City"
       labelPlacement="floating"
@@ -109,7 +119,7 @@
     <ion-button
       expand="full"
       type="submit"
-      color="dark"
+      color="warning"
       [disabled]="!credentials.valid"
       >Register</ion-button
     >

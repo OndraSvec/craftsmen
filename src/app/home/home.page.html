@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark" mode="ios">
+  <ion-toolbar color="warning" mode="ios">
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon
@@ -18,7 +18,7 @@
 <ion-content>
   <ion-button
     class="ion-padding"
-    color="dark"
+    color="warning"
     expand="full"
     [routerLink]="['/add-review', 'new']"
     >Add Review</ion-button
@@ -61,7 +61,7 @@
             gap: 0.25rem;
           "
         >
-          <ion-badge slot="end" color="dark"
+          <ion-badge slot="end" color="warning"
             >{{ craftsman.reviews | average:'rating' }}</ion-badge
           >
           <ion-note slot="end"
@@ -88,7 +88,7 @@
             "
           >
             <p>{{ review.message }}</p>
-            <ion-badge slot="end" color="dark"
+            <ion-badge slot="end" color="warning"
               >{{ review.rating | toFixedOne }}</ion-badge
             >
           </div>

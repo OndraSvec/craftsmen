@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark" mode="ios">
+  <ion-toolbar color="warning" mode="ios">
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,6 +8,7 @@
   <form [formGroup]="credentials" (ngSubmit)="login()">
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Email"
       labelPlacement="floating"
@@ -18,6 +19,7 @@
     ></ion-input>
     <ion-input
       class="ion-margin-bottom"
+      color="warning"
       fill="solid"
       label="Password"
       labelPlacement="floating"
@@ -30,7 +32,7 @@
     <ion-button
       expand="full"
       type="submit"
-      color="dark"
+      color="warning"
       [disabled]="!credentials.valid"
       >Login</ion-button
     >
