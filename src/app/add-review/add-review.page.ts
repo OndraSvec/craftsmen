@@ -61,13 +61,13 @@ export class AddReviewPage implements OnInit, OnDestroy {
   private formSub!: Subscription;
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private navigationState!: NavigationState;
   private firestoreService: FirestoreService = inject(FirestoreService);
   private alertController: AlertController = inject(AlertController);
   public craftsmen: Craftsman[] = [];
   public filteredCraftsmen: Craftsman[] = [];
   public loading = false;
   public editMode = false;
+  public navigationState!: NavigationState;
 
   constructor() {
     addIcons({ chevronBackOutline });
