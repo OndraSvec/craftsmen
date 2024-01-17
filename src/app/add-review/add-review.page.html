@@ -10,166 +10,176 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="addReviewForm" (ngSubmit)="onSubmit()">
-    @if (!editMode && craftsmen.length > 0) {
-    <ion-toggle
-      class="ion-margin-bottom"
-      color="warning"
-      [checked]="true"
-      labelPlacement="start"
-      formControlName="existing"
-      >Existing</ion-toggle
-    >
-    } @if(existing?.value) {<ion-select
-      class="ion-margin-bottom"
-      color="warning"
-      interface="popover"
-      fill="solid"
-      label="CRN"
-      labelPlacement="floating"
-      formControlName="selectCRN"
-      (ionChange)="onCRNChange()"
-    >
-      @if (editMode) {
-      <ion-select-option [value]="navigationState.CRN"
-        >{{ navigationState.CRN }}</ion-select-option
-      >
-      } @else { @for (CRN of craftsmen | uniqueCRNs; track $index) {
-      <ion-select-option [value]="CRN">{{ CRN }}</ion-select-option>
-      } }
-    </ion-select>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <div class="wrapper">
+        <form [formGroup]="addReviewForm" (ngSubmit)="onSubmit()">
+          @if (!editMode && craftsmen.length > 0) {
+          <ion-toggle
+            class="ion-margin-bottom"
+            color="warning"
+            [checked]="true"
+            labelPlacement="start"
+            formControlName="existing"
+            >Existing</ion-toggle
+          >
+          } @if(existing?.value) {<ion-select
+            class="ion-margin-bottom"
+            color="warning"
+            interface="popover"
+            fill="solid"
+            label="CRN"
+            labelPlacement="floating"
+            formControlName="selectCRN"
+            (ionChange)="onCRNChange()"
+          >
+            @if (editMode) {
+            <ion-select-option [value]="navigationState.CRN"
+              >{{ navigationState.CRN }}</ion-select-option
+            >
+            } @else { @for (CRN of craftsmen | uniqueCRNs; track $index) {
+            <ion-select-option [value]="CRN">{{ CRN }}</ion-select-option>
+            } }
+          </ion-select>
 
-    <ion-select
-      class="ion-margin-bottom"
-      color="warning"
-      interface="popover"
-      fill="solid"
-      label="Craftsman"
-      color="warning"
-      labelPlacement="floating"
-      formControlName="selectCraftsman"
-    >
-      @for (craftsman of filteredCraftsmen; track craftsman['id']) {
-      <ion-select-option [value]="craftsman['id']"
-        >{{ craftsman['firstName'] + ' ' + craftsman['lastName']
-        }}</ion-select-option
-      >
-      }
-    </ion-select>
-    } @else {
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="First Name"
-      labelPlacement="floating"
-      type="text"
-      formControlName="firstName"
-      helperText="Enter Craftsman's First Name"
-      errorText="This field is required"
-    ></ion-input>
+          <ion-select
+            class="ion-margin-bottom"
+            color="warning"
+            interface="popover"
+            fill="solid"
+            label="Craftsman"
+            color="warning"
+            labelPlacement="floating"
+            formControlName="selectCraftsman"
+          >
+            @for (craftsman of filteredCraftsmen; track craftsman['id']) {
+            <ion-select-option [value]="craftsman['id']"
+              >{{ craftsman['firstName'] + ' ' + craftsman['lastName']
+              }}</ion-select-option
+            >
+            }
+          </ion-select>
+          } @else {
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="First Name"
+            labelPlacement="floating"
+            type="text"
+            formControlName="firstName"
+            helperText="Enter Craftsman's First Name"
+            errorText="This field is required"
+          ></ion-input>
 
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="Last Name"
-      labelPlacement="floating"
-      type="text"
-      formControlName="lastName"
-      helperText="Enter Craftsman's Last Name"
-      errorText="This field is required"
-    ></ion-input>
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="Last Name"
+            labelPlacement="floating"
+            type="text"
+            formControlName="lastName"
+            helperText="Enter Craftsman's Last Name"
+            errorText="This field is required"
+          ></ion-input>
 
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="Profession"
-      labelPlacement="floating"
-      type="text"
-      formControlName="profession"
-      helperText="Enter Craftsman's Profession"
-      errorText="This field is required"
-    >
-    </ion-input>
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="Profession"
+            labelPlacement="floating"
+            type="text"
+            formControlName="profession"
+            helperText="Enter Craftsman's Profession"
+            errorText="This field is required"
+          >
+          </ion-input>
 
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="Company"
-      labelPlacement="floating"
-      type="text"
-      formControlName="company"
-      helperText="Enter Craftsman's Company"
-      errorText="This field is required"
-    >
-    </ion-input>
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="Company"
+            labelPlacement="floating"
+            type="text"
+            formControlName="company"
+            helperText="Enter Craftsman's Company"
+            errorText="This field is required"
+          >
+          </ion-input>
 
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="CRN"
-      labelPlacement="floating"
-      type="number"
-      formControlName="CRN"
-      helperText="Enter Craftsman's Company Registration Number"
-      errorText="Enter a valid CRN"
-    >
-    </ion-input>
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="CRN"
+            labelPlacement="floating"
+            type="number"
+            formControlName="CRN"
+            helperText="Enter Craftsman's Company Registration Number"
+            errorText="Enter a valid CRN"
+          >
+          </ion-input>
 
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="City"
-      labelPlacement="floating"
-      type="text"
-      formControlName="city"
-      helperText="Enter Craftsman's City"
-      errorText="This field is required"
-    >
-    </ion-input>
-    }
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="City"
+            labelPlacement="floating"
+            type="text"
+            formControlName="city"
+            helperText="Enter Craftsman's City"
+            errorText="This field is required"
+          >
+          </ion-input>
+          }
 
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="Rating"
-      labelPlacement="floating"
-      type="number"
-      formControlName="rating"
-      helperText="Enter your Rating"
-      errorText="Enter a value between 1 and 5"
-    ></ion-input>
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="Rating"
+            labelPlacement="floating"
+            type="number"
+            formControlName="rating"
+            helperText="Enter your Rating"
+            errorText="Enter a value between 1 and 5"
+          ></ion-input>
 
-    <ion-textarea
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="Review"
-      labelPlacement="floating"
-      formControlName="message"
-      helperText="Enter your Review"
-      errorText="This field is required"
-    ></ion-textarea>
+          <ion-textarea
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="Review"
+            labelPlacement="floating"
+            formControlName="message"
+            helperText="Enter your Review"
+            errorText="This field is required"
+          ></ion-textarea>
 
-    <ion-button
-      color="warning"
-      expand="full"
-      type="submit"
-      [disabled]="!addReviewForm.valid"
-      >{{ editMode ? 'Edit Review' : 'Add Review'}}</ion-button
-    >
-    @if (editMode) {
-    <ion-button color="warning" expand="full" type="button" (click)="onDelete()"
-      >Delete Review</ion-button
-    >
-    }
-  </form>
+          <ion-button
+            color="warning"
+            expand="full"
+            type="submit"
+            [disabled]="!addReviewForm.valid"
+            >{{ editMode ? 'Edit Review' : 'Add Review'}}</ion-button
+          >
+          @if (editMode) {
+          <ion-button
+            color="warning"
+            expand="full"
+            type="button"
+            (click)="onDelete()"
+            >Delete Review</ion-button
+          >
+          }
+        </form>
+      </div>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 @if (loading) {
 <app-loading-spinner></app-loading-spinner>

@@ -32,3 +32,17 @@ ion-accordion-group {
     }
   }
 }
+
+ion-row {
+  flex-direction: column;
+}
+
+.wrapper {
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* @media screen and (min-width: 640px) {
+  ion-content
+} */

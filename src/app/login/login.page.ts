@@ -10,8 +10,10 @@ import { AlertController } from '@ionic/angular';
 import {
   IonButton,
   IonContent,
+  IonGrid,
   IonHeader,
   IonInput,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
@@ -28,8 +30,10 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
     CommonModule,
     IonButton,
     IonContent,
+    IonGrid,
     IonHeader,
     IonInput,
+    IonRow,
     IonTitle,
     IonToolbar,
     LoadingSpinnerComponent,

@@ -5,44 +5,50 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="credentials" (ngSubmit)="login()">
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="Email"
-      labelPlacement="floating"
-      type="email"
-      formControlName="email"
-      helperText="Enter your Email Address"
-      errorText="Invalid Email"
-    ></ion-input>
-    <ion-input
-      class="ion-margin-bottom"
-      color="warning"
-      fill="solid"
-      label="Password"
-      labelPlacement="floating"
-      type="password"
-      formControlName="password"
-      helperText="Enter your Password"
-      errorText="Invalid Password: Must be at least 8 characters long"
-    ></ion-input>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <div class="wrapper">
+        <form [formGroup]="credentials" (ngSubmit)="login()">
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="Email"
+            labelPlacement="floating"
+            type="email"
+            formControlName="email"
+            helperText="Enter your Email Address"
+            errorText="Invalid Email"
+          ></ion-input>
+          <ion-input
+            class="ion-margin-bottom"
+            color="warning"
+            fill="solid"
+            label="Password"
+            labelPlacement="floating"
+            type="password"
+            formControlName="password"
+            helperText="Enter your Password"
+            errorText="Invalid Password: Must be at least 8 characters long"
+          ></ion-input>
 
-    <ion-button
-      expand="full"
-      type="submit"
-      color="warning"
-      [disabled]="!credentials.valid"
-      >Login</ion-button
-    >
-  </form>
-  <p>
-    Don't have an account?
-    <a [routerLink]="['/register']" [style.text-decoration]="'none'">
-      Sign Up!</a
-    >
-  </p>
+          <ion-button
+            expand="full"
+            type="submit"
+            color="warning"
+            [disabled]="!credentials.valid"
+            >Login</ion-button
+          >
+        </form>
+        <p>
+          Don't have an account?
+          <a [routerLink]="['/register']" [style.text-decoration]="'none'">
+            Sign Up!</a
+          >
+        </p>
+      </div></ion-row
+    ></ion-grid
+  >
 </ion-content>
 @if (loading) {
 <app-loading-spinner></app-loading-spinner>
