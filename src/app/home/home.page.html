@@ -75,6 +75,7 @@
         @for (review of craftsman.reviews; track review.id) {
         <div
           class="ion-padding ion-margin-bottom review"
+          [style.cursor]="currentUser === review.reviewer.uid ? 'pointer' : 'not-allowed'"
           (click)="onNavigate(review.id, craftsman.CRN, craftsman.id)"
         >
           <h5>

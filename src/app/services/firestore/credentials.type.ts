@@ -48,4 +48,5 @@ export type Review = {
 type Reviewer = {
   firstName: string;
   lastName: string;
+  uid: string;
 };

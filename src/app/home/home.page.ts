@@ -75,6 +75,7 @@ export class HomePage implements OnInit, OnDestroy {
   public sortBy = 'Last Name';
   public searchValue = '';
   public loading = false;
+  public currentUser = this.authService.getUser();
 
   constructor() {
     addIcons({
@@ -160,9 +161,8 @@ export class HomePage implements OnInit, OnDestroy {
       craftsmanID,
       reviewID
     );
-    const currentUser = this.authService.getUser();
 
-    if (review.reviewer.uid !== currentUser) return;
+    if (review.reviewer.uid !== this.currentUser) return;
 
     this.router.navigate(['/add-review', 'edit'], {
       state: {
