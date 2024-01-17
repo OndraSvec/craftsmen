@@ -7,8 +7,9 @@ such as deferrable views and standalone components, as well as reactive forms to
 
 It is made using:
 
-- Angular
-- Ionic
+- Typescript,
+- Angular,
+- Ionic,
 - and Firebase
 
 You can check it out below:
